@@ -6,8 +6,11 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/kasattejaswi/goget/internal/cli"
+	"github.com/kasattejaswi/goget/internal/downloader"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -64,4 +67,30 @@ func main() {
 		cliStructure.PrintHelp(os.Stdout)
 	}
 
+	if url == "" {
+		fmt.Printf("Error: Please pass a URL to download a file\n")
+		cliStructure.PrintHelp(os.Stdout)
+	}
+
+	if name == "" {
+		urlP := strings.Split(strings.ReplaceAll(url, " ", ""), "/")
+		for i := len(urlP) - 1; i >= 0; i-- {
+			if urlP[i] != "" {
+				name = urlP[i]
+				break
+			}
+		}
+	}
+	// Building download options
+	downloadOptions := downloader.DownloadOptions{
+		Url:      url,
+		Threads:  threads,
+		Output:   output,
+		FileName: name,
+	}
+	err := downloadOptions.Download()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
