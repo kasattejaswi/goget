@@ -1,11 +1,11 @@
 /*
-Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+Copyright © 2022 Tejaswi Kasat (kasattejasvi@gmail.com)
 
 */
 package main
 
-import "github.com/kasattejaswi/goget/cmd"
+import "fmt"
 
 func main() {
-	cmd.Execute()
+	fmt.Println("Hello world")
 }
